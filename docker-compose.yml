@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  instakit:
+    build: .
+    container_name: darkwebinstakit
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./static/uploads:/app/static/uploads
+      - ./sessions.txt:/app/sessions.txt
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+    networks:
+      - instakit_network
+
+networks:
+  instakit_network:
+    driver: bridge
