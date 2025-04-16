@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نسخ الملف الشخصي - InstaKitPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="glitch-container">
+            <h1 class="glitch" data-text="InstaKitPro">InstaKitPro</h1>
+        </div>
+        <div class="subtitle">نسخ الملف الشخصي</div>
+        
+        <div class="matrix-bg"></div>
+        
+        <div class="form-container">
+            <div class="form-card">
+                <div class="form-header">
+                    <i class="fas fa-clone"></i>
+                    <h2>نسخ الملف الشخصي من حساب آخر</h2>
+                </div>
+                
+                <div id="alert-container"></div>
+                
+                <div id="copy-form">
+                    <div class="form-group">
+                        <label for="session_id">معرف الجلسة</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-key"></i>
+                            <input type="text" id="session_id" name="session_id" placeholder="أدخل معرف الجلسة" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="target_username">اسم المستخدم المستهدف</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="target_username" name="target_username" placeholder="أدخل اسم المستخدم المستهدف" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="button" id="copy-button" onclick="copyProfile()">
+                            <i class="fas fa-clone"></i> نسخ الملف الشخصي
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="result-container" style="display: none;">
+                    <div class="success-message">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>تم نسخ الملف الشخصي بنجاح!</h3>
+                    </div>
+                    
+                    <div class="success-details">
+                        <p>تم نسخ صورة الملف الشخصي والاسم والسيرة الذاتية من الحساب <span id="target-username-display" class="highlight-text"></span> بنجاح.</p>
+                        <p>قد تستغرق التغييرات بضع دقائق حتى تظهر في تطبيق إنستغرام.</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="button" class="secondary-button" onclick="location.href='{{ url_for('update_profile_page') }}'">
+                            <i class="fas fa-user-edit"></i> تحديث الملف الشخصي
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="loading-container" style="display: none;">
+                    <div class="loader">
+                        <div class="loader-inner"></div>
+                    </div>
+                    <p>جاري نسخ الملف الشخصي...</p>
+                </div>
+            </div>
+            
+            <div class="back-button" onclick="location.href='{{ url_for('index') }}'">
+                <i class="fas fa-arrow-right"></i> العودة للقائمة الرئيسية
+            </div>
+        </div>
+        
+        <footer>
+            <div class="developer">
+                <span>المطور: INSTA EK6Q</span>
+                <a href="https://t.me/nusrc" target="_blank">تليجرام: @nusrc</a>
+            </div>
+            <div class="copyright">
+                InstaKitPro &copy; 2025 | جميع الحقوق محفوظة
+            </div>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/matrix.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // تحميل معرف الجلسة من التخزين المحلي إذا كان موجوداً
+        document.addEventListener('DOMContentLoaded', function() {
+            const sessionId = localStorage.getItem('instakit_session');
+            if (sessionId) {
+                document.getElementById('session_id').value = sessionId;
+            }
+        });
+        
+        function showAlert(type, message) {
+            const alertContainer = document.getElementById('alert-container');
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type}">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    <span>${message}</span>
+                    <button type="button" class="close-alert" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+        }
+        
+        function copyProfile() {
+            const sessionId = document.getElementById('session_id').value;
+            const targetUsername = document.getElementById('target_username').value;
+            
+            if (!sessionId) {
+                showAlert('error', 'يرجى إدخال معرف الجلسة');
+                return;
+            }
+            
+            if (!targetUsername) {
+                showAlert('error', 'يرجى إدخال اسم المستخدم المستهدف');
+                return;
+            }
+            
+            // إظهار مؤشر التحميل
+            document.getElementById('copy-form').style.display = 'none';
+            document.getElementById('loading-container').style.display = 'flex';
+            
+            // إرسال طلب نسخ الملف الشخصي
+            const formData = new FormData();
+            formData.append('session_id', sessionId);
+            formData.append('target_username', targetUsername);
+            
+            fetch('{{ url_for("copy_profile_api") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // إخفاء مؤشر التحميل
+                document.getElementById('loading-container').style.display = 'none';
+                
+                if (data.status === 'success') {
+                    // عرض نتيجة النسخ
+                    document.getElementById('target-username-display').textContent = data.username;
+                    document.getElementById('result-container').style.display = 'block';
+                    
+                    // تخزين اسم المستخدم المستهدف في التخزين المحلي
+                    localStorage.setItem('instakit_target_username', data.username);
+                } else {
+                    // عرض رسالة الخطأ
+                    document.getElementById('copy-form').style.display = 'block';
+                    showAlert('error', data.message);
+                }
+            })
+            .catch(error => {
+                // إخفاء مؤشر التحميل وعرض رسالة الخطأ
+                document.getElementById('loading-container').style.display = 'none';
+                document.getElementById('copy-form').style.display = 'block';
+                showAlert('error', 'حدث خطأ أثناء الاتصال بالخادم');
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

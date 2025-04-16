@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaKitPro - أداة إنستغرام الاحترافية</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="glitch-container">
+            <h1 class="glitch" data-text="InstaKitPro">InstaKitPro</h1>
+        </div>
+        <div class="subtitle">أداة إنستغرام الاحترافية</div>
+        
+        <div class="matrix-bg"></div>
+        
+        <div class="card-container">
+            <div class="card" onclick="location.href='{{ url_for('extract_session_page') }}'">
+                <div class="card-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div class="card-title">استخراج الجلسة</div>
+                <div class="card-description">استخراج معرف الجلسة من حسابك مع دعم التحقق بخطوتين</div>
+                <div class="card-hover-effect"></div>
+            </div>
+            
+            <div class="card" onclick="location.href='{{ url_for('update_profile_page') }}'">
+                <div class="card-icon">
+                    <i class="fas fa-user-edit"></i>
+                </div>
+                <div class="card-title">تحديث الملف الشخصي</div>
+                <div class="card-description">تحديث صورة الملف الشخصي ومتابعة الحسابات المميزة</div>
+                <div class="card-hover-effect"></div>
+            </div>
+            
+            <div class="card" onclick="location.href='{{ url_for('copy_profile_page') }}'">
+                <div class="card-icon">
+                    <i class="fas fa-clone"></i>
+                </div>
+                <div class="card-title">نسخ الملف الشخصي</div>
+                <div class="card-description">نسخ الملف الشخصي من حساب آخر (الصورة، الاسم، السيرة الذاتية)</div>
+                <div class="card-hover-effect"></div>
+            </div>
+        </div>
+        
+        <div class="warning-box">
+            <div class="warning-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="warning-text">
+                تنبيه: استخدم هذه الأداة بمسؤولية وفقًا لشروط استخدام Instagram. لا تشارك معرف الجلسة الخاص بك مع أي شخص.
+            </div>
+        </div>
+        
+        <footer>
+            <div class="developer">
+                <span>المطور: INSTA EK6Q</span>
+                <a href="https://t.me/nusrc" target="_blank">تليجرام: @nusrc</a>
+            </div>
+            <div class="copyright">
+                InstaKitPro &copy; 2025 | جميع الحقوق محفوظة
+            </div>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/matrix.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

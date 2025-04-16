@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استخراج الجلسة - InstaKitPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="glitch-container">
+            <h1 class="glitch" data-text="InstaKitPro">InstaKitPro</h1>
+        </div>
+        <div class="subtitle">استخراج الجلسة</div>
+        
+        <div class="matrix-bg"></div>
+        
+        <div class="form-container">
+            <div class="form-card">
+                <div class="form-header">
+                    <i class="fas fa-key"></i>
+                    <h2>استخراج معرف الجلسة</h2>
+                </div>
+                
+                <div id="alert-container"></div>
+                
+                <div id="login-form">
+                    <div class="form-group">
+                        <label for="username">اسم المستخدم</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="username" name="username" placeholder="أدخل اسم المستخدم" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">كلمة المرور</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" required>
+                            <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility()"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="button" id="login-button" onclick="extractSession()">
+                            <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="two-factor-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="verification-code">رمز التحقق بخطوتين</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-shield-alt"></i>
+                            <input type="text" id="verification-code" name="verification-code" placeholder="أدخل رمز التحقق" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="button" id="verify-button" onclick="verifyTwoFactor()">
+                            <i class="fas fa-check-circle"></i> تحقق
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="result-container" style="display: none;">
+                    <div class="success-message">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>تم استخراج الجلسة بنجاح!</h3>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="session-id">معرف الجلسة الخاص بك:</label>
+                        <div class="input-with-icon">
+                            <input type="text" id="session-id" readonly>
+                            <button type="button" class="copy-button" onclick="copySessionId()">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <div class="warning-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="warning-text">
+                            تنبيه: احتفظ بمعرف الجلسة هذا بشكل آمن ولا تشاركه مع أي شخص.
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="button" class="secondary-button" onclick="location.href='{{ url_for('update_profile_page') }}'">
+                            <i class="fas fa-user-edit"></i> تحديث الملف الشخصي
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="loading-container" style="display: none;">
+                    <div class="loader">
+                        <div class="loader-inner"></div>
+                    </div>
+                    <p>جاري معالجة طلبك...</p>
+                </div>
+            </div>
+            
+            <div class="back-button" onclick="location.href='{{ url_for('index') }}'">
+                <i class="fas fa-arrow-right"></i> العودة للقائمة الرئيسية
+            </div>
+        </div>
+        
+        <footer>
+            <div class="developer">
+                <span>المطور: INSTA EK6Q</span>
+                <a href="https://t.me/nusrc" target="_blank">تليجرام: @nusrc</a>
+            </div>
+            <div class="copyright">
+                InstaKitPro &copy; 2025 | جميع الحقوق محفوظة
+            </div>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/matrix.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.querySelector('.toggle-password');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+        
+        function showAlert(type, message) {
+            const alertContainer = document.getElementById('alert-container');
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type}">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    <span>${message}</span>
+                    <button type="button" class="close-alert" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+        }
+        
+        function extractSession() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!username || !password) {
+                showAlert('error', 'يرجى إدخال اسم المستخدم وكلمة المرور');
+                return;
+            }
+            
+            // إظهار مؤشر التحميل
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('loading-container').style.display = 'flex';
+            
+            // إرسال طلب استخراج الجلسة
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('password', password);
+            
+            fetch('{{ url_for("extract_session_api") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // إخفاء مؤشر التحميل
+                document.getElementById('loading-container').style.display = 'none';
+                
+                if (data.status === 'success') {
+                    // عرض نتيجة الاستخراج
+                    document.getElementById('session-id').value = data.session_id;
+                    document.getElementById('result-container').style.display = 'block';
+                    
+                    // تخزين معرف الجلسة في التخزين المحلي
+                    localStorage.setItem('instakit_session', data.session_id);
+                } else if (data.status === '2fa_required') {
+                    // عرض نموذج التحقق بخطوتين
+                    document.getElementById('two-factor-form').style.display = 'block';
+                    showAlert('warning', 'مطلوب رمز التحقق بخطوتين');
+                } else {
+                    // عرض رسالة الخطأ
+                    document.getElementById('login-form').style.display = 'block';
+                    showAlert('error', data.message);
+                }
+            })
+            .catch(error => {
+                // إخفاء مؤشر التحميل وعرض رسالة الخطأ
+                document.getElementById('loading-container').style.display = 'none';
+                document.getElementById('login-form').style.display = 'block';
+                showAlert('error', 'حدث خطأ أثناء الاتصال بالخادم');
+                console.error('Error:', error);
+            });
+        }
+        
+        function verifyTwoFactor() {
+            const code = document.getElementById('verification-code').value;
+            
+            if (!code) {
+                showAlert('error', 'يرجى إدخال رمز التحقق');
+                return;
+            }
+            
+            // إظهار مؤشر التحميل
+            document.getElementById('two-factor-form').style.display = 'none';
+            document.getElementById('loading-container').style.display = 'flex';
+            
+            // إرسال طلب التحقق بخطوتين
+            const formData = new FormData();
+            formData.append('code', code);
+            
+            fetch('{{ url_for("verify_2fa") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // إخفاء مؤشر التحميل
+                document.getElementById('loading-container').style.display = 'none';
+                
+                if (data.status === 'success') {
+                    // عرض نتيجة الاستخراج
+                    document.getElementById('session-id').value = data.session_id;
+                    document.getElementById('result-container').style.display = 'block';
+                    
+                    // تخزين معرف الجلسة في التخزين المحلي
+                    localStorage.setItem('instakit_session', data.session_id);
+                } else {
+                    // عرض رسالة الخطأ
+                    document.getElementById('two-factor-form').style.display = 'block';
+                    showAlert('error', data.message);
+                }
+            })
+            .catch(error => {
+                // إخفاء مؤشر التحميل وعرض رسالة الخطأ
+                document.getElementById('loading-container').style.display = 'none';
+                document.getElementById('two-factor-form').style.display = 'block';
+                showAlert('error', 'حدث خطأ أثناء الاتصال بالخادم');
+                console.error('Error:', error);
+            });
+        }
+        
+        function copySessionId() {
+            const sessionIdInput = document.getElementById('session-id');
+            sessionIdInput.select();
+            document.execCommand('copy');
+            
+            // إظهار رسالة النسخ
+            const copyButton = document.querySelector('.copy-button');
+            const originalHTML = copyButton.innerHTML;
+            copyButton.innerHTML = '<i class="fas fa-check"></i>';
+            copyButton.classList.add('copied');
+            
+            setTimeout(() => {
+                copyButton.innerHTML = originalHTML;
+                copyButton.classList.remove('copied');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
