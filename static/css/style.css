@@ -1,0 +1,741 @@
+/* 
+ * InstaKitPro - Dark Web Style CSS
+ * تصميم داكن يشبه الدارك ويب مع تأثيرات بصرية متقدمة
+ */
+
+:root {
+    --bg-color: #0a0a0a;
+    --card-bg: #111111;
+    --text-color: #e0e0e0;
+    --primary-color: #00c6ff;
+    --secondary-color: #0072ff;
+    --danger-color: #ff2d55;
+    --warning-color: #ffcc00;
+    --success-color: #00ff7f;
+    --border-color: #222222;
+    --input-bg: #1a1a1a;
+    --shadow-color: rgba(0, 198, 255, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* تأثير الخلل (Glitch) للعنوان الرئيسي */
+.glitch-container {
+    text-align: center;
+    margin-top: 30px;
+    position: relative;
+}
+
+.glitch {
+    font-size: 3.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    position: relative;
+    text-shadow: 0.05em 0 0 var(--primary-color), 
+                -0.05em -0.025em 0 var(--secondary-color),
+                0.025em 0.05em 0 var(--danger-color);
+    animation: glitch 2s infinite;
+    color: var(--text-color);
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--primary-color);
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--secondary-color);
+    clip: rect(24px, 450px, 100px, 0);
+    animation: glitch-anim2 1s infinite linear alternate-reverse;
+}
+
+@keyframes glitch {
+    0% {
+        text-shadow: 0.05em 0 0 var(--primary-color), 
+                    -0.05em -0.025em 0 var(--secondary-color),
+                    0.025em 0.05em 0 var(--danger-color);
+    }
+    14% {
+        text-shadow: 0.05em 0 0 var(--primary-color), 
+                    -0.05em -0.025em 0 var(--secondary-color),
+                    0.025em 0.05em 0 var(--danger-color);
+    }
+    15% {
+        text-shadow: -0.05em -0.025em 0 var(--primary-color),
+                    0.025em 0.025em 0 var(--secondary-color),
+                    -0.05em -0.05em 0 var(--danger-color);
+    }
+    49% {
+        text-shadow: -0.05em -0.025em 0 var(--primary-color),
+                    0.025em 0.025em 0 var(--secondary-color),
+                    -0.05em -0.05em 0 var(--danger-color);
+    }
+    50% {
+        text-shadow: 0.025em 0.05em 0 var(--primary-color),
+                    0.05em 0 0 var(--secondary-color),
+                    0 -0.05em 0 var(--danger-color);
+    }
+    99% {
+        text-shadow: 0.025em 0.05em 0 var(--primary-color),
+                    0.05em 0 0 var(--secondary-color),
+                    0 -0.05em 0 var(--danger-color);
+    }
+    100% {
+        text-shadow: -0.025em 0 0 var(--primary-color),
+                    -0.025em -0.025em 0 var(--secondary-color),
+                    -0.025em -0.05em 0 var(--danger-color);
+    }
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip: rect(42px, 9999px, 44px, 0);
+    }
+    5% {
+        clip: rect(12px, 9999px, 59px, 0);
+    }
+    10% {
+        clip: rect(48px, 9999px, 29px, 0);
+    }
+    15% {
+        clip: rect(42px, 9999px, 73px, 0);
+    }
+    20% {
+        clip: rect(63px, 9999px, 27px, 0);
+    }
+    25% {
+        clip: rect(34px, 9999px, 55px, 0);
+    }
+    30% {
+        clip: rect(86px, 9999px, 73px, 0);
+    }
+    35% {
+        clip: rect(20px, 9999px, 20px, 0);
+    }
+    40% {
+        clip: rect(26px, 9999px, 60px, 0);
+    }
+    45% {
+        clip: rect(25px, 9999px, 66px, 0);
+    }
+    50% {
+        clip: rect(57px, 9999px, 98px, 0);
+    }
+    55% {
+        clip: rect(5px, 9999px, 46px, 0);
+    }
+    60% {
+        clip: rect(82px, 9999px, 31px, 0);
+    }
+    65% {
+        clip: rect(54px, 9999px, 27px, 0);
+    }
+    70% {
+        clip: rect(28px, 9999px, 99px, 0);
+    }
+    75% {
+        clip: rect(45px, 9999px, 69px, 0);
+    }
+    80% {
+        clip: rect(23px, 9999px, 85px, 0);
+    }
+    85% {
+        clip: rect(54px, 9999px, 84px, 0);
+    }
+    90% {
+        clip: rect(45px, 9999px, 47px, 0);
+    }
+    95% {
+        clip: rect(37px, 9999px, 20px, 0);
+    }
+    100% {
+        clip: rect(4px, 9999px, 91px, 0);
+    }
+}
+
+@keyframes glitch-anim2 {
+    0% {
+        clip: rect(65px, 9999px, 65px, 0);
+    }
+    5% {
+        clip: rect(52px, 9999px, 77px, 0);
+    }
+    10% {
+        clip: rect(28px, 9999px, 57px, 0);
+    }
+    15% {
+        clip: rect(16px, 9999px, 13px, 0);
+    }
+    20% {
+        clip: rect(24px, 9999px, 32px, 0);
+    }
+    25% {
+        clip: rect(35px, 9999px, 35px, 0);
+    }
+    30% {
+        clip: rect(7px, 9999px, 46px, 0);
+    }
+    35% {
+        clip: rect(76px, 9999px, 91px, 0);
+    }
+    40% {
+        clip: rect(69px, 9999px, 15px, 0);
+    }
+    45% {
+        clip: rect(23px, 9999px, 79px, 0);
+    }
+    50% {
+        clip: rect(42px, 9999px, 73px, 0);
+    }
+    55% {
+        clip: rect(71px, 9999px, 75px, 0);
+    }
+    60% {
+        clip: rect(29px, 9999px, 95px, 0);
+    }
+    65% {
+        clip: rect(95px, 9999px, 7px, 0);
+    }
+    70% {
+        clip: rect(2px, 9999px, 55px, 0);
+    }
+    75% {
+        clip: rect(36px, 9999px, 56px, 0);
+    }
+    80% {
+        clip: rect(96px, 9999px, 23px, 0);
+    }
+    85% {
+        clip: rect(39px, 9999px, 52px, 0);
+    }
+    90% {
+        clip: rect(80px, 9999px, 18px, 0);
+    }
+    95% {
+        clip: rect(95px, 9999px, 38px, 0);
+    }
+    100% {
+        clip: rect(82px, 9999px, 81px, 0);
+    }
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    color: var(--text-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+/* بطاقات الميزات */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 50px 0;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 30px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7), 0 0 20px var(--shadow-color);
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.card-description {
+    font-size: 1rem;
+    color: #aaa;
+    line-height: 1.5;
+}
+
+.card-hover-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, var(--primary-color), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .card-hover-effect {
+    opacity: 0.1;
+}
+
+/* مربع التحذير */
+.warning-box {
+    background-color: rgba(255, 204, 0, 0.1);
+    border: 1px solid var(--warning-color);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 40px 0;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.warning-icon {
+    font-size: 2rem;
+    color: var(--warning-color);
+    margin-left: 20px;
+}
+
+.warning-text {
+    font-size: 1rem;
+    color: #ddd;
+}
+
+/* تذييل الصفحة */
+footer {
+    margin-top: 50px;
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.developer {
+    margin-bottom: 10px;
+}
+
+.developer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.developer a:hover {
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* نماذج الإدخال */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-header i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.form-header h2 {
+    font-size: 1.8rem;
+    color: var(--text-color);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon i {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #777;
+}
+
+.input-with-icon .toggle-password {
+    left: 15px;
+    right: auto;
+    cursor: pointer;
+}
+
+.input-with-icon input {
+    width: 100%;
+    padding: 12px 45px 12px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-with-icon input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button i {
+    margin-left: 10px;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.secondary-button {
+    background: linear-gradient(45deg, #333, #555);
+    margin-top: 15px;
+}
+
+.back-button {
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    color: var(--primary-color);
+}
+
+.back-button i {
+    margin-left: 5px;
+}
+
+/* مؤشر التحميل */
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.loader-inner {
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    border-top-color: var(--secondary-color);
+    border-bottom-color: var(--secondary-color);
+    animation: spin-reverse 0.5s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+#loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+}
+
+/* رسائل التنبيه */
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.alert i {
+    margin-left: 10px;
+    font-size: 1.2rem;
+}
+
+.alert-success {
+    background-color: rgba(0, 255, 127, 0.1);
+    border: 1px solid var(--success-color);
+    color: var(--success-color);
+}
+
+.alert-error {
+    background-color: rgba(255, 45, 85, 0.1);
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
+}
+
+.alert-warning {
+    background-color: rgba(255, 204, 0, 0.1);
+    border: 1px solid var(--warning-color);
+    color: var(--warning-color);
+}
+
+.close-alert {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    width: auto;
+}
+
+.close-alert:hover {
+    transform: translateY(-50%) scale(1.2);
+    box-shadow: none;
+}
+
+/* رسالة النجاح */
+.success-message {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.success-message i {
+    font-size: 4rem;
+    color: var(--success-color);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.success-message h3 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.success-details {
+    background-color: rgba(0, 255, 127, 0.05);
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(0, 255, 127, 0.2);
+}
+
+.success-details p {
+    margin-bottom: 10px;
+}
+
+.success-details p:last-child {
+    margin-bottom: 0;
+}
+
+.highlight-text {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* حقل تحميل الملفات */
+.file-input-container {
+    position: relative;
+}
+
+.file-input-container input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-input-label {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: #777;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-input-label i {
+    margin-left: 10px;
+}
+
+.file-input-container:hover .file-input-label {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
+/* معاينة الصورة */
+.image-preview-container {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.image-preview-container img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+/* زر النسخ */
+.copy-button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    padding: 5px;
+}
+
+.copy-button:hover {
+    transform: translateY(-50%) scale(1.2);
+    box-shadow: none;
+}
+
+.copy-button.copied {
+    color: var(--success-color);
+}
+
+/* تأثير الماتريكس في الخلفية */
+.matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.07;
+}
+
+/* تحسينات للأجهزة المحمولة */
+@media (max-width: 768px) {
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .card {
+        width: 100%;
+        max-width: 350px;
+    }
+    
+    .glitch {
+        font-size: 2.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .form-card {
+        padding: 20px;
+    }
+}
